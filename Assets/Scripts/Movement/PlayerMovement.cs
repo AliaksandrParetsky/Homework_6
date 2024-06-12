@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
     public Animator CharacterAnimator{get{if (characterAnimator == null)
                 characterAnimator = GetComponent<Animator>(); return characterAnimator;}}
 
+    private LifeControl characterLifeControl;
+    public LifeControl CharacterLifeControl{get{if (characterLifeControl == null)
+                characterLifeControl = GetComponent<LifeControl>(); return characterLifeControl;}}
 
     private Vector3 verticalVelocity = Vector3.zero;
 
@@ -31,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
     private float standingSpeed = 0.0f;
 
     private bool isJumping;
-    public bool IsJumping { get { return isJumping;} private set { isJumping = value; } }
 
     private bool isStanding;
     private bool isJump;
@@ -44,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         CharacterAnimator.SetFloat("Speed", 0.0f);
+        CharacterAnimator.ResetTrigger("Kick");
+        CharacterAnimator.ResetTrigger("Jump");
 
         isJumping = false;
     }
@@ -115,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
                     CharacterAnimator.SetTrigger("Jump");
                     isJumping = true;
                     isJump = false;
+
+                    CharacterLifeControl.CanBePressedKick = false;
                 }
             }
         }
@@ -130,8 +136,9 @@ public class PlayerMovement : MonoBehaviour
                 CharacterAnimator.SetTrigger("Land");
                 isJumping = false;
                 isJump = false;
+
+                CharacterLifeControl.CanBePressedKick = true;
             }
-            
         }
     }
 

@@ -1,7 +1,10 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
-using System.Runtime.InteropServices;
+using System.Collections;
 
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(LifeControl))]
+[RequireComponent(typeof(KickControl))]
 public class PlayerInputController : MonoBehaviour
 {
     private InputControlActions inputControlActions;
